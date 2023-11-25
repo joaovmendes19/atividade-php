@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('disciplina', function (Blueprint $table) {
+        Schema::create('disciplinas', function (Blueprint $table) {
             $table->id();
             $table->string("nome");
             $table->string("data_inicio");
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        // 
     }
 };

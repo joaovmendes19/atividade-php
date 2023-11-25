@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::resource("estudante", App\Http\Controllers\EstudanteController::class);
 
 Route::resource("professor", App\Http\Controllers\ProfessorController::class);
+
+Route::resource("disciplina", App\Http\Controllers\DisciplinaController::class);
