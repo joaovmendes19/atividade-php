@@ -43,5 +43,3 @@
 
 3. **Explore as Funcionalidades:**
    - Navegue pelas diferentes páginas e funcionalidades da aplicação.
-
-#### Notas Adicionais
