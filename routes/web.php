@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get("/", function () {
+    return view("home");
+});
 Route::resource("estudante", App\Http\Controllers\EstudanteController::class);
 
 Route::resource("professor", App\Http\Controllers\ProfessorController::class);

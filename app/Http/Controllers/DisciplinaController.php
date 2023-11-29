@@ -61,7 +61,19 @@ class DisciplinaController extends Controller
     }
 
     public function update(Request $request, Disciplina $disciplina) {
-      
+        Disciplina::where("id", $disciplina->id)->update([
+            "nome" => $request->nome,
+            "data_inicio" => $request->data_inicio,
+            "data_fim" => $request->data_fim,
+            "carga_horaria" => $request->carga_horaria,
+            "professor_id" => $request->professor_id,
+            "estudante_id" => $request->estudante_id
+        ]); // UPDATE estudantes SET nome = ?, email = ?, idade = ?, data_nascimento = ? WHERE id = ?
+
+        $disciplinas = Disciplina::all(); // SELECT * FROM estudantes
+        return view("disciplina.index", [
+            "disciplinas" => $disciplinas
+        ]); // retornar a view estudante/index.blade.php
     }
 
     public function destroy(Disciplina $discplina) {

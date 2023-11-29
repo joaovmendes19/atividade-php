@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disciplina;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class ProfessorController extends Controller
     }
 
     // SINONIMO DE /estudante
-    public function index() {
+    public function index()
+    {
         $professores = Professor::all(); // SELECT * FROM estudantes
 
         return view("professor.index", [
@@ -23,11 +25,13 @@ class ProfessorController extends Controller
         ]); // retornar a view estudante/index.blade.php
     }
 
-    public function create() {
+    public function create()
+    {
         return view("professor.create"); // retornar a view estudante/create.blade.php
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         Professor::create([
             "nome" => $request->nome,
             "email" => $request->email,
@@ -36,18 +40,23 @@ class ProfessorController extends Controller
         ]); // INSERT INTO estudantes (nome, email, idade, data_nascimento) VALUES (?,?,?,?)
 
         $professores = Professor::all(); // SELECT * FROM estudantes
-        return view("professor.index", [
-            "professores" => $professores] 
+        return view(
+            "professor.index",
+            [
+                "professores" => $professores
+            ]
         ); // retornar a view estudante/index.blade.php
     }
 
-    public function edit(Professor $professor) {
+    public function edit(Professor $professor)
+    {
         return view("professor.edit", [
             "professor" => $professor
         ]); // retornar a view estudante/edit.blade.php
     }
 
-    public function update(Request $request, Professor $professor) {
+    public function update(Request $request, Professor $professor)
+    {
         Professor::where("id", $professor->id)->update([
             "nome" => $request->nome,
             "email" => $request->email,
@@ -61,13 +70,23 @@ class ProfessorController extends Controller
         ]); // retornar a view estudante/index.blade.php
     }
 
-    public function destroy(Professor $professor) {
+    public function destroy(Professor $professor)
+    {
+        $professor = Professor::find($professor->id);
+        $disciplina = Disciplina::where("professor_id", $professor->id)->first();
+        $professores = Professor::all(); // SELECT * FROM estudantes
+        if ($disciplina) {
+            return view("professor.index", [
+                "professores" => $professores,
+                "erro" => "Professor não pode ser excluído, pois está vinculado a uma disciplina"
+            ]); // retornar a view estudante/index.blade.php
+        }
         Professor::where("id", $professor->id)->delete(); // DELETE FROM estudantes WHERE id = ?
 
-        $professores = Professor::all(); // SELECT * FROM estudantes
         return view("professor.index", [
             "professores" => $professores
         ]); // retornar a view estudante/index.blade.php
+
     }
 
 }

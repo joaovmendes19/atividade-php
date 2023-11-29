@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disciplina;
 use App\Models\Estudante;
 use Illuminate\Http\Request;
 
@@ -62,6 +63,15 @@ class EstudanteController extends Controller
     }
 
     public function destroy(Estudante $estudante) {
+        $estudante = Estudante::find($estudante->id);
+        $disciplina = Disciplina::where("estudante_id", $estudante->id)->first();
+        $estudantes = Estudante::all(); // SELECT * FROM estudantes
+        if ($disciplina) {
+            return view("estudante.index", [
+                "estudantes" => $estudantes,
+                "erro" => "Estudante não pode ser excluído, pois está vinculado a uma disciplina"
+            ]); // retornar a view estudante/index.blade.php
+        }
         Estudante::where("id", $estudante->id)->delete(); // DELETE FROM estudantes WHERE id = ?
 
         $estudantes = Estudante::all(); // SELECT * FROM estudantes
